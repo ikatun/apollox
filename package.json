@@ -20,7 +20,7 @@
   "devDependencies": {
     "@types/graphql": "^14.0.3",
     "@types/mobx-apollo": "0.0.2",
-    "typescript": "^2.7.2"
+    "typescript": "^2.9.2"
   },
   "dependencies": {
     "apollo-client": "^2.4.7",
