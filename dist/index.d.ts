@@ -27,7 +27,7 @@ declare type QueryOptions5<T> = {
 declare type QueryOptions6<T> = Partial<QueryOptions5<T>> & {
     alertErrors?: boolean;
 };
-export declare function createGraphqlClient(client: ApolloClient<any>, defaultApiErrorHandler: (e: Error) => void): {
+export declare function createGraphqlClient<T>(client: ApolloClient<T>, defaultApiErrorHandler: (e: Error) => void): {
     mutation: <TVariables, TResult>(graphqlMutation: any) => (variables: TVariables, options?: MutationOptions3<TResult>) => Promise<TResult>;
     query: <TVariables, TResult>(graphqlQuery: any) => (variables: TVariables, options?: QueryOptions6<TResult>) => MobxApolloQuery<TResult>;
 };

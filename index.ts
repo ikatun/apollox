@@ -19,7 +19,7 @@ type QueryOptions6<T> = Partial<QueryOptions5<T>> & {
   alertErrors?: boolean;
 };
 
-export function createGraphqlClient(client: ApolloClient<any>, defaultApiErrorHandler: (e: Error) => void) {
+export function createGraphqlClient<T>(client: ApolloClient<T>, defaultApiErrorHandler: (e: Error) => void) {
   const mutation = <TVariables, TResult>(graphqlMutation: any) =>
     async (variables: TVariables, options: MutationOptions3<TResult> = {}) => {
       const { alertErrors, ...apolloOptions } = options;
