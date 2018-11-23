@@ -84,3 +84,5 @@ export function createGraphqlClient<T>(client: ApolloClient<T>, defaultApiErrorH
 
   return { mutation, query };
 }
+
+export { withoutTypename };

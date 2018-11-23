@@ -58,6 +58,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var mobx_1 = require("mobx");
 var mobx_apollo_1 = __importDefault(require("mobx-apollo"));
 var without_typename_1 = require("./without-typename");
+exports.withoutTypename = without_typename_1.withoutTypename;
 var fast_memoize_1 = __importDefault(require("fast-memoize"));
 function createGraphqlClient(client, defaultApiErrorHandler) {
     var _this = this;

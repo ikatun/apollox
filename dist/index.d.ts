@@ -1,5 +1,6 @@
 import { ApolloClient, MutationOptions } from 'apollo-client';
 import { MobxApolloQuery, MobxApolloQueryOptions } from 'mobx-apollo';
+import { withoutTypename } from './without-typename';
 declare type MutationOptions1<T> = {
     [K in Exclude<keyof MutationOptions<T, {}>, 'variables'>]: MutationOptions<T, {}>[K];
 };
@@ -31,4 +32,4 @@ export declare function createGraphqlClient<T>(client: ApolloClient<T>, defaultA
     mutation: <TVariables, TResult>(graphqlMutation: any) => (variables: TVariables, options?: MutationOptions3<TResult>) => Promise<TResult>;
     query: <TVariables, TResult>(graphqlQuery: any) => (variables: TVariables, options?: QueryOptions6<TResult>) => MobxApolloQuery<TResult>;
 };
-export {};
+export { withoutTypename };
