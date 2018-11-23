@@ -1,0 +1,23 @@
+{
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ikatun/apollox.git"
+  },
+  "author": "Ivo Katunaric",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ikatun/apollox/issues"
+  },
+  "homepage": "https://github.com/ikatun/apollox#readme",
+  "name": "apollox",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^2.7.2"
+  }
+}
