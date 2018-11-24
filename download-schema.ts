@@ -10,7 +10,7 @@ if (!url) {
 
 const command = `npx apollo schema:download --endpoint ${url}`;
 
-execAsync(command).then(({ stderr, stdout }) => {
+module.exports = execAsync(command).then(({ stderr, stdout }) => {
   console.log(stdout);
   console.error(stderr);
 }).catch((e) => {

@@ -7,9 +7,11 @@ var url = process.argv[3];
 if (!url) {
     throw new Error('schema:download requires argument');
 }
-var command = "npx apollo schema:download --endpoint " + process.argv[3];
-execAsync(command).then(function (_a) {
+var command = "npx apollo schema:download --endpoint " + url;
+module.exports = execAsync(command).then(function (_a) {
     var stderr = _a.stderr, stdout = _a.stdout;
     console.log(stdout);
     console.error(stderr);
+}).catch(function (e) {
+    throw e;
 });

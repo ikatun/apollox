@@ -5,7 +5,7 @@ import { relative } from 'path';
 
 const rootPath = process.cwd();
 
-(async () => {
+module.exports = (async () => {
   const typesContent = fs.readFileSync(`${rootPath}/src/graphql/types.ts`, 'utf8');
   const withoutExtension = (x: string) => x.substring(0, x.lastIndexOf('.'));
   const toNodePath = (x: string) => x.startsWith('.') ? x : `./${x}`;
@@ -71,6 +71,7 @@ ${allQueriesArray.map(generateQueryStore).join('\n')}
 
 export const graphqlStore = new GraphqlStore();`;
 
-  console.log(generateStoreContent());
+  fs.writeFileSync('./src/graphql/graphql-store.ts', generateStoreContent(), 'utf8');
+  console.log('src/graphql/graphql-store.ts generated');
 })();
 
