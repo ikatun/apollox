@@ -3,7 +3,9 @@ import { promisify } from 'util';
 
 const execAsync = promisify(exec);
 
-execAsync('npx apollo codegen:generate src/graphql/types.ts').then(({ stderr, stdout }) => {
+const command = "npx apollo codegen:generate src/graphql/types.ts --schema schema.json --target typescript --outputFlat --queries 'src/**/**queries.ts'";
+
+execAsync(command).then(({ stderr, stdout }) => {
   console.log(stdout);
   console.error(stderr);
 });
