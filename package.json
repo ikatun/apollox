@@ -33,7 +33,8 @@
     "lodash": "*",
     "mobx": "*",
     "mobx-apollo": "0.0.18",
-    "object-key-filter": "0.0.4"
+    "object-key-filter": "0.0.4",
+    "ts-node": "^7.0.1"
   },
   "bin": {
     "apollox": "./cli.js"
