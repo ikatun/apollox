@@ -2,16 +2,10 @@ import * as fs from 'fs';
 import { sync as globSync } from 'glob';
 import { flatten, lowerFirst, map } from 'lodash';
 import { relative } from 'path';
-import { exec } from 'child_process';
-import { promisify } from 'util';
-
-const execAsync = promisify(exec);
 
 const rootPath = process.cwd();
 
 (async () => {
-  await execAsync('npx apollo codegen:generate src/graphql/types.ts');
-
   const typesContent = fs.readFileSync(`${rootPath}/src/graphql/types.ts`, 'utf8');
   const withoutExtension = (x: string) => x.substring(0, x.lastIndexOf('.'));
   const toNodePath = (x: string) => x.startsWith('.') ? x : `./${x}`;
