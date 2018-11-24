@@ -26,6 +26,7 @@
     "typescript": "^2.9.2"
   },
   "dependencies": {
+    "apollo": "^1.9.1",
     "apollo-client": "*",
     "fast-memoize": "^2.5.1",
     "glob": "*",
