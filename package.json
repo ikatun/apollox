@@ -36,6 +36,6 @@
     "object-key-filter": "0.0.4"
   },
   "bin": {
-    "apollox": "./cli"
+    "apollox": "./cli.js"
   }
 }
