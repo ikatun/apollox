@@ -86,3 +86,4 @@ export function createGraphqlClient<T>(client: ApolloClient<T>, defaultApiErrorH
 }
 
 export { withoutTypename };
+export { getAllExistingQueries, IQueryInfo } from './get-all-existing-queries';

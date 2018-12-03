@@ -1,54 +1,14 @@
 import * as fs from 'fs';
-import { sync as globSync } from 'glob';
-import { flatten, lowerFirst, map } from 'lodash';
+import { lowerFirst } from 'lodash';
 import { relative } from 'path';
+import { getAllExistingQueries, IQueryInfo } from './get-all-existing-queries';
 
 const rootPath = process.cwd();
+const toNodePath = (x: string) => x.startsWith('.') ? x : `./${x}`;
+const withoutExtension = (x: string) => x.substring(0, x.lastIndexOf('.'));
 
 module.exports = (async () => {
-  const typesContent = fs.readFileSync(`${rootPath}/src/graphql/types.ts`, 'utf8');
-  const withoutExtension = (x: string) => x.substring(0, x.lastIndexOf('.'));
-  const toNodePath = (x: string) => x.startsWith('.') ? x : `./${x}`;
-
-  function getOperationName(queryInstance: any) {
-    const operationDefinition = queryInstance.definitions.filter((d: any) => d.kind === 'OperationDefinition')[0];
-
-    return operationDefinition.name.value;
-  }
-
-  function getOperationType(queryInstance: any) {
-    const operationDefinition = queryInstance.definitions.filter((d: any) => d.kind === 'OperationDefinition')[0];
-
-    return operationDefinition.operation;
-  }
-
-  const queriesFiles = globSync(`${rootPath}/src/**/*queries.ts`);
-
-  interface IQueryInfo {
-    queryName: string;
-    exportName: string;
-    filePath: string;
-    variablesType: string;
-    operationType: string;
-  }
-
-  const allQueries = queriesFiles.map((filePath: string) =>
-// tslint:disable-next-line
-      map(require(filePath), (queryInstance: any, exportName: string): IQueryInfo => {
-        const queryName = getOperationName(queryInstance);
-        const variablesType = `${queryName}Variables`;
-
-        return {
-          queryName,
-          exportName,
-          filePath,
-          variablesType: typesContent.includes(variablesType) ? `T.${variablesType}` : '{}',
-          operationType: getOperationType(queryInstance),
-        };
-      }),
-  );
-
-  const allQueriesArray = flatten(flatten(allQueries));
+  const allQueriesArray = getAllExistingQueries(rootPath);
 
   const generateQueryImport = (q: IQueryInfo) =>
     `import { ${q.exportName} } from '${toNodePath(relative(`${rootPath}/src/graphql/`, withoutExtension(q.filePath)))}';`;
@@ -74,4 +34,3 @@ export const graphqlStore = new GraphqlStore();`;
   fs.writeFileSync('./src/graphql/graphql-store.ts', generateStoreContent(), 'utf8');
   console.log('src/graphql/graphql-store.ts generated');
 })();
-
