@@ -30,7 +30,7 @@ function getAllExistingQueries(rootPath) {
                 queryName: queryName,
                 exportName: exportName,
                 filePath: filePath,
-                variablesType: typesContent.includes(variablesType) ? "T." + variablesType : '{}',
+                variablesType: typesContent.includes(" " + variablesType) ? "T." + variablesType : '{}',
                 operationType: getOperationType(queryInstance),
             };
         });

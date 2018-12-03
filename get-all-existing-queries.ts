@@ -36,7 +36,7 @@ export function getAllExistingQueries(rootPath: string) {
           queryName,
           exportName,
           filePath,
-          variablesType: typesContent.includes(variablesType) ? `T.${variablesType}` : '{}',
+          variablesType: typesContent.includes(` ${variablesType}`) ? `T.${variablesType}` : '{}',
           operationType: getOperationType(queryInstance),
         };
       }),
