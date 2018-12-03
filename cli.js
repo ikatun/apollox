@@ -14,6 +14,10 @@ if (process.argv[2] === 'generate:store') {
     .then(() => require('./dist/generate-graphql-types.js'))
     .then(() => require('./dist/generate-graphql-store.js'))
     .then(() => require('./dist/download-schema-as-graphql.js'));
+} else if (process.argv[2] === 'generate:queries') {
+  require('./dist/download-schema.js')
+    .then(() => require('./dist/download-schema-as-graphql.js'))
+    .then(() => require('./dist/convert-gql-to-ts.js'));
 } else {
   throw new Error('argument expected: generate:store|generate:types|schema:download|generate:everything');
 }
