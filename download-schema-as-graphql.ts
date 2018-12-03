@@ -8,7 +8,7 @@ if (!url) {
   throw new Error('schema:download:graphql requires argument');
 }
 
-const command = `npx graphql get-schema --endpoint ${url} --output schema.gql`;
+const command = `npx graphql get-schema --endpoint ${url} --output schema.graphql`;
 
 module.exports = execAsync(command).then(({ stderr, stdout }) => {
   console.log(stdout);
