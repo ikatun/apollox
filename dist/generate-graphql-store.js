@@ -44,40 +44,16 @@ var __importStar = (this && this.__importStar) || function (mod) {
 var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs = __importStar(require("fs"));
-var glob_1 = require("glob");
 var lodash_1 = require("lodash");
 var path_1 = require("path");
+var get_all_existing_queries_1 = require("./get-all-existing-queries");
 var rootPath = process.cwd();
+var toNodePath = function (x) { return x.startsWith('.') ? x : "./" + x; };
+var withoutExtension = function (x) { return x.substring(0, x.lastIndexOf('.')); };
 module.exports = (function () { return __awaiter(_this, void 0, void 0, function () {
-    function getOperationName(queryInstance) {
-        var operationDefinition = queryInstance.definitions.filter(function (d) { return d.kind === 'OperationDefinition'; })[0];
-        return operationDefinition.name.value;
-    }
-    function getOperationType(queryInstance) {
-        var operationDefinition = queryInstance.definitions.filter(function (d) { return d.kind === 'OperationDefinition'; })[0];
-        return operationDefinition.operation;
-    }
-    var typesContent, withoutExtension, toNodePath, queriesFiles, allQueries, allQueriesArray, generateQueryImport, generateQueryStore, generateStoreContent;
+    var allQueriesArray, generateQueryImport, generateQueryStore, generateStoreContent;
     return __generator(this, function (_a) {
-        typesContent = fs.readFileSync(rootPath + "/src/graphql/types.ts", 'utf8');
-        withoutExtension = function (x) { return x.substring(0, x.lastIndexOf('.')); };
-        toNodePath = function (x) { return x.startsWith('.') ? x : "./" + x; };
-        queriesFiles = glob_1.sync(rootPath + "/src/**/*queries.ts");
-        allQueries = queriesFiles.map(function (filePath) {
-            // tslint:disable-next-line
-            return lodash_1.map(require(filePath), function (queryInstance, exportName) {
-                var queryName = getOperationName(queryInstance);
-                var variablesType = queryName + "Variables";
-                return {
-                    queryName: queryName,
-                    exportName: exportName,
-                    filePath: filePath,
-                    variablesType: typesContent.includes(variablesType) ? "T." + variablesType : '{}',
-                    operationType: getOperationType(queryInstance),
-                };
-            });
-        });
-        allQueriesArray = lodash_1.flatten(lodash_1.flatten(allQueries));
+        allQueriesArray = get_all_existing_queries_1.getAllExistingQueries(rootPath);
         generateQueryImport = function (q) {
             return "import { " + q.exportName + " } from '" + toNodePath(path_1.relative(rootPath + "/src/graphql/", withoutExtension(q.filePath))) + "';";
         };

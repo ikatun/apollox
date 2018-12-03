@@ -33,3 +33,4 @@ export declare function createGraphqlClient<T>(client: ApolloClient<T>, defaultA
     query: <TVariables, TResult>(graphqlQuery: any) => (variables: TVariables, options?: QueryOptions6<TResult>) => MobxApolloQuery<TResult>;
 };
 export { withoutTypename };
+export { getAllExistingQueries, IQueryInfo } from './get-all-existing-queries';
