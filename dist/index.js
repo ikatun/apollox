@@ -125,5 +125,3 @@ function createGraphqlClient(client, defaultApiErrorHandler) {
     return { mutation: mutation, query: query };
 }
 exports.createGraphqlClient = createGraphqlClient;
-var get_all_existing_queries_1 = require("./get-all-existing-queries");
-exports.getAllExistingQueries = get_all_existing_queries_1.getAllExistingQueries;
