@@ -27,6 +27,7 @@ declare type QueryOptions5<T> = {
 };
 declare type QueryOptions6<T> = Partial<QueryOptions5<T>> & {
     alertErrors?: boolean;
+    keepTypenames?: boolean;
 };
 export declare function createGraphqlClient<T>(client: ApolloClient<T>, defaultApiErrorHandler: (e: Error) => void): {
     mutation: <TVariables, TResult>(graphqlMutation: any) => (variables: TVariables, options?: MutationOptions3<TResult>) => Promise<TResult>;

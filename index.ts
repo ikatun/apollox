@@ -17,6 +17,7 @@ type QueryOptions4<T> = { [K in Exclude<keyof QueryOptions3<T>, 'onError'>]: Que
 type QueryOptions5<T> = { [K in Exclude<keyof QueryOptions4<T>, 'onError'>]: QueryOptions4<T>[K] };
 type QueryOptions6<T> = Partial<QueryOptions5<T>> & {
   alertErrors?: boolean;
+  keepTypenames?: boolean;
 };
 
 export function createGraphqlClient<T>(client: ApolloClient<T>, defaultApiErrorHandler: (e: Error) => void) {
@@ -47,7 +48,7 @@ export function createGraphqlClient<T>(client: ApolloClient<T>, defaultApiErrorH
 
   const query = <TVariables, TResult>(graphqlQuery: any) => {
     function createQuery(variables: TVariables, options: QueryOptions6<TResult> = {}): MobxApolloQuery<TResult> {
-      const { alertErrors, ...mobxApolloOptions } = options;
+      const { alertErrors, keepTypenames, ...mobxApolloOptions } = options;
 
       const observableQuery = mobxApollo<TResult>({
         client,
@@ -69,6 +70,10 @@ export function createGraphqlClient<T>(client: ApolloClient<T>, defaultApiErrorH
         get data() {
           if (observableQuery.loading || observableQuery.error) {
             return undefined;
+          }
+
+          if (keepTypenames) {
+            return observableQuery.data;
           }
 
           return withoutTypename(toJS(observableQuery.data));

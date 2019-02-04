@@ -99,7 +99,7 @@ function createGraphqlClient(client, defaultApiErrorHandler) {
     var query = function (graphqlQuery) {
         function createQuery(variables, options) {
             if (options === void 0) { options = {}; }
-            var alertErrors = options.alertErrors, mobxApolloOptions = __rest(options, ["alertErrors"]);
+            var alertErrors = options.alertErrors, keepTypenames = options.keepTypenames, mobxApolloOptions = __rest(options, ["alertErrors", "keepTypenames"]);
             var observableQuery = mobx_apollo_1.default(__assign({ client: client, query: graphqlQuery, variables: variables }, mobxApolloOptions, { onError: function (error) {
                     if (alertErrors) {
                         defaultApiErrorHandler(error);
@@ -113,6 +113,9 @@ function createGraphqlClient(client, defaultApiErrorHandler) {
                 get data() {
                     if (observableQuery.loading || observableQuery.error) {
                         return undefined;
+                    }
+                    if (keepTypenames) {
+                        return observableQuery.data;
                     }
                     return without_typename_1.withoutTypename(mobx_1.toJS(observableQuery.data));
                 },
