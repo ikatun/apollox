@@ -5,7 +5,7 @@ import { flatten, map } from 'lodash';
 function getOperationName(queryInstance: any) {
   const operationDefinition = queryInstance.definitions.filter((d: any) => d.kind === 'OperationDefinition')[0];
 
-  return operationDefinition.name.value;
+  return operationDefinition && operationDefinition.name.value;
 }
 
 function getOperationType(queryInstance: any) {
@@ -28,8 +28,11 @@ export function getAllExistingQueries(rootPath: string) {
 
   const allQueries = queriesFiles.map((filePath: string) =>
 // tslint:disable-next-line
-      map(require(filePath), (queryInstance: any, exportName: string): IQueryInfo => {
+      map(require(filePath), (queryInstance: any, exportName: string): IQueryInfo | undefined => {
         const queryName = getOperationName(queryInstance);
+        if (!queryName) {
+          return undefined;
+        }
         const variablesType = `${queryName}Variables`;
 
         return {
@@ -42,5 +45,5 @@ export function getAllExistingQueries(rootPath: string) {
       }),
   );
 
-  return flatten(flatten(allQueries));
+  return flatten(flatten(allQueries)).filter(q => q).map(q => q!);
 }

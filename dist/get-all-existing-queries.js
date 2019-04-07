@@ -12,7 +12,7 @@ var glob_1 = require("glob");
 var lodash_1 = require("lodash");
 function getOperationName(queryInstance) {
     var operationDefinition = queryInstance.definitions.filter(function (d) { return d.kind === 'OperationDefinition'; })[0];
-    return operationDefinition.name.value;
+    return operationDefinition && operationDefinition.name.value;
 }
 function getOperationType(queryInstance) {
     var operationDefinition = queryInstance.definitions.filter(function (d) { return d.kind === 'OperationDefinition'; })[0];
@@ -25,6 +25,9 @@ function getAllExistingQueries(rootPath) {
         // tslint:disable-next-line
         return lodash_1.map(require(filePath), function (queryInstance, exportName) {
             var queryName = getOperationName(queryInstance);
+            if (!queryName) {
+                return undefined;
+            }
             var variablesType = queryName + "Variables";
             return {
                 queryName: queryName,
@@ -35,6 +38,6 @@ function getAllExistingQueries(rootPath) {
             };
         });
     });
-    return lodash_1.flatten(lodash_1.flatten(allQueries));
+    return lodash_1.flatten(lodash_1.flatten(allQueries)).filter(function (q) { return q; }).map(function (q) { return q; });
 }
 exports.getAllExistingQueries = getAllExistingQueries;
