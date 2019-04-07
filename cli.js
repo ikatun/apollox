@@ -1,5 +1,7 @@
 #!/usr/bin/env node
-require('ts-node').register();
+require('ts-node').register({
+  project: __dirname,
+});
 
 if (process.argv[2] === 'generate:store') {
   require('./dist/generate-graphql-store.js');
