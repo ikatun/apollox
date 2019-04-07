@@ -1,6 +1,7 @@
 #!/usr/bin/env node
+import path from 'path';
 require('ts-node').register({
-  project: __dirname,
+  project: path.join(__dirname, 'tsconfig.json'),
 });
 
 if (process.argv[2] === 'generate:store') {
