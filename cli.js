@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-import path from 'path';
+var path = require('path');
+
 require('ts-node').register({
   project: path.join(__dirname, 'tsconfig.json'),
 });
