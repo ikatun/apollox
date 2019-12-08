@@ -3,6 +3,7 @@ import { lowerFirst } from 'lodash';
 import { relative } from 'path';
 import { getAllExistingQueries, IQueryInfo } from './get-all-existing-queries';
 import clientTemplate from './client.template';
+import graphqlConfigTemplate from './graphqlconfig.template';
 
 const rootPath = process.cwd();
 const toNodePath = (x: string) => x.startsWith('.') ? x : `./${x}`;
@@ -38,6 +39,10 @@ export const graphqlStore = new GraphqlStore();`;
   if (!fs.existsSync('./src/graphql/client.ts')) {
     fs.writeFileSync('./src/graphql/client.ts', clientTemplate);
   }
+  if (!fs.existsSync('./.graphqlconfig')) {
+    fs.writeFileSync('./.graphqlconfig', graphqlConfigTemplate);
+  }
+
   fs.writeFileSync('./src/graphql/graphql-store.ts', generateStoreContent(), 'utf8');
   console.log('src/graphql/graphql-store.ts generated');
 })();

@@ -51,6 +51,7 @@ var lodash_1 = require("lodash");
 var path_1 = require("path");
 var get_all_existing_queries_1 = require("./get-all-existing-queries");
 var client_template_1 = __importDefault(require("./client.template"));
+var graphqlconfig_template_1 = __importDefault(require("./graphqlconfig.template"));
 var rootPath = process.cwd();
 var toNodePath = function (x) { return x.startsWith('.') ? x : "./" + x; };
 var withoutExtension = function (x) { return x.substring(0, x.lastIndexOf('.')); };
@@ -72,6 +73,9 @@ module.exports = (function () { return __awaiter(_this, void 0, void 0, function
         }
         if (!fs.existsSync('./src/graphql/client.ts')) {
             fs.writeFileSync('./src/graphql/client.ts', client_template_1.default);
+        }
+        if (!fs.existsSync('./.graphqlconfig')) {
+            fs.writeFileSync('./.graphqlconfig', graphqlconfig_template_1.default);
         }
         fs.writeFileSync('./src/graphql/graphql-store.ts', generateStoreContent(), 'utf8');
         console.log('src/graphql/graphql-store.ts generated');
