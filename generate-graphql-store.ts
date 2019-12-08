@@ -31,6 +31,9 @@ ${allQueriesArray.map(generateQueryStore).join('\n')}
 
 export const graphqlStore = new GraphqlStore();`;
 
+  if (!fs.existsSync('./src/graphql')) {
+    fs.mkdirSync('./src/graphql');
+  }
   fs.writeFileSync('./src/graphql/graphql-store.ts', generateStoreContent(), 'utf8');
   console.log('src/graphql/graphql-store.ts generated');
 })();
