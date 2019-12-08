@@ -13,7 +13,7 @@ This should be run everytime you want to integrate with a new query or mutation.
   Executes `download:schema`, `generate:types` and `generate:store`.
 This should be run everytime you change a query or query definition changes on the server.
 
-### apollox schema:download url
+### apollox download:schema url
   Downloads graphql schema to `schema.json` file using `https://www.npmjs.com/package/apollo`
 
 
