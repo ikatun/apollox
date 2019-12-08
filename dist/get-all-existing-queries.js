@@ -20,7 +20,11 @@ function getOperationType(queryInstance) {
 }
 function getAllExistingQueries(rootPath) {
     var queriesFiles = glob_1.sync(rootPath + "/src/**/*queries.ts");
-    var typesContent = fs.readFileSync(rootPath + "/src/graphql/types.ts", 'utf8');
+    var typesPath = rootPath + "/src/graphql/types.ts";
+    if (!fs.existsSync(typesPath)) {
+        return [];
+    }
+    var typesContent = fs.readFileSync(typesPath, 'utf8');
     var allQueries = queriesFiles.map(function (filePath) {
         // tslint:disable-next-line
         return lodash_1.map(require(filePath), function (queryInstance, exportName) {

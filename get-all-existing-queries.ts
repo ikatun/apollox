@@ -24,7 +24,13 @@ export interface IQueryInfo {
 
 export function getAllExistingQueries(rootPath: string) {
   const queriesFiles = globSync(`${rootPath}/src/**/*queries.ts`);
-  const typesContent = fs.readFileSync(`${rootPath}/src/graphql/types.ts`, 'utf8');
+  const typesPath = `${rootPath}/src/graphql/types.ts`;
+
+  if (!fs.existsSync(typesPath)) {
+    return [];
+  }
+
+  const typesContent = fs.readFileSync(typesPath, 'utf8');
 
   const allQueries = queriesFiles.map((filePath: string) =>
 // tslint:disable-next-line
